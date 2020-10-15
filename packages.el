@@ -51,3 +51,6 @@
 
 ;; matlab-mode
 (package! matlab-mode)
+
+;; lsp-latex
+(package! lsp-latex)
