@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       company +tng           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ivy               ; a search engine for love and life
@@ -80,7 +80,7 @@
        :checkers
        syntax              ; tasing you for every semicolon you forget
        ;;spell             ; tasing you for misspelling mispelling ((requires aspell aspell-en))
-       ;;grammar           ; tasing grammar mistake every you make ((requires langtool))
+       ;;grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
