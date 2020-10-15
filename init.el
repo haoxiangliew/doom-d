@@ -79,8 +79,8 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       ;;spell             ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       ;;spell             ; tasing you for misspelling mispelling ((requires aspell aspell-en))
+       ;;grammar           ; tasing grammar mistake every you make ((requires langtool))
 
        :tools
        ;;ansible
@@ -136,7 +136,7 @@
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (jsts-ls in emacs (requires nodejs & npm))
        ;;julia             ; a better, faster MATLAB
        kotlin            ; a better, slicker Java(Script)
-       latex             ; writing papers in Emacs has never been so fun
+       (latex +lsp)             ; writing papers in Emacs has never been so fun (lsp-latex in package.el (requires texlab & texlive-core))
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
