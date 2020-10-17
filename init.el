@@ -133,7 +133,7 @@
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
        (java +lsp) ; the poster child for carpal tunnel syndrome (jdtls in emacs (requires jdk & possibly export JAVA_HOME=/usr/lib/jvm/default))
-       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (jsts-ls in emacs (requires nodejs & npm))
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires npm i -g typescript-language-server (requires nodejs & npm))
        ;;julia             ; a better, faster MATLAB
        kotlin            ; a better, slicker Java(Script)
        (latex +lsp)             ; writing papers in Emacs has never been so fun (lsp-latex in package.el (requires texlab & texlive-core))
