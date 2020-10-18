@@ -135,7 +135,7 @@
        (java +lsp) ; the poster child for carpal tunnel syndrome (jdtls in emacs (requires jdk & possibly export JAVA_HOME=/usr/lib/jvm/default))
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires npm i -g typescript-language-server (requires nodejs & npm))
        ;;julia             ; a better, faster MATLAB
-       kotlin            ; a better, slicker Java(Script)
+       ;;kotlin            ; a better, slicker Java(Script)
        (latex +lsp)             ; writing papers in Emacs has never been so fun (lsp-latex in package.el (requires texlab & texlive-core))
        ;;lean
        ;;factor
@@ -156,13 +156,13 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       scala             ; java, but good
+       ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor ((requires npm i -g bash-language-server))
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
-       swift             ; who asked for emoji variables?
+       ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        (web +lsp)               ; the tubes (html-ls & css-ls in emacs (requires nodejs & npm))
        yaml              ; JSON, but readable
