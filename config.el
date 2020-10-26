@@ -56,4 +56,8 @@
 
 ;; company-mode
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0)
+      company-idle-delay 0.0
+      company-global-modes '(not eshell-mode))
+
+;; org-mode
+(setq org-agenda-files (list "~/haoxiangliew.org"))
