@@ -57,7 +57,12 @@
 ;; company-mode
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.0
-      company-global-modes '(not eshell-mode))
+      company-global-modes '(not eshell-mode)) ;; disables company in eshell (for constrained environments)
+
+;; eshell-mode (only complete on tab)
+(when (and (executable-find "fish")
+           (require 'fish-completion nil t))
+  (global-fish-completion-mode))
 
 ;; org-mode
 (setq org-agenda-files (list "~/haoxiangliew.org"))
