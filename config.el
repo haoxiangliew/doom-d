@@ -56,5 +56,4 @@
 
 ;; company-mode
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0
-      company-global-modes '(not eshell-mode)) ;; disables company in eshell (for constrained environments)
+      company-idle-delay 0.0)
