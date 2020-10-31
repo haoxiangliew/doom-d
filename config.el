@@ -54,6 +54,34 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; doom-dashboard
+(setq fancy-splash-image "~/.doom.d/home.png")
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-banner)
+(add-hook '+doom-dashboard-functions #'chika-widget-banner)
+(defun chika-widget-banner ()
+  (let ((point (point)))
+    (mapc (lambda (line)
+            (insert (propertize (+doom-dashboard--center +doom-dashboard--width line)
+                                'face 'doom-dashboard-banner) " ")
+            (insert "\n"))
+	    '("              Emacs!             "))
+    (when (and (display-graphic-p)
+               (stringp fancy-splash-image)
+               (file-readable-p fancy-splash-image))
+      (let ((image (create-image (fancy-splash-image-file))))
+        (add-text-properties
+         point (point) `(display ,image rear-nonsticky (display)))
+        (save-excursion
+          (goto-char point)
+          (insert (make-string
+                   (truncate
+                    (max 0 (+ 1 (/ (- +doom-dashboard--width
+                                      (car (image-size image nil)))
+                                   2))))
+                   ? ))))
+      (insert (make-string (or (cdr +doom-dashboard-banner-padding) 0)
+                           ?\n)))))
+
 ;; company-mode
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.0)
