@@ -80,7 +80,7 @@
             "⠄⣰⡗⠹⣿⣄⠄⠄⠄⢀⣿⣿⣿⣿⣿⣿⠟⣅⣥⣿⣿⣿⣿⠿⠋⠄⠄⣾⡌⢠⣿⡿⠃"
             "⠜⠋⢠⣷⢻⣿⣿⣶⣾⣿⣿⣿⣿⠿⣛⣥⣾⣿⠿⠟⠛⠉⠄⠄         "
             "                                 "
-            "              Emacs!             "))
+            " Hi Hao Xiang! Welcome to Emacs! "))
     (when (and (display-graphic-p)
                (stringp fancy-splash-image)
                (file-readable-p fancy-splash-image))
