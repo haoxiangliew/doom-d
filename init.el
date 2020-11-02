@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company +tng           ; the ultimate code completion backend
+       company +tng           ; the ultimate code completion backend (+tng is to complete with tab)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ivy               ; a search engine for love and life
@@ -75,11 +75,11 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs (requires cmake)
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       ;;spell             ; tasing you for misspelling mispelling ((requires aspell aspell-en))
+       ;;spell             ; tasing you for misspelling mispelling (requires aspell aspell-en)
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -110,12 +110,12 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       (cc +lsp)                ; C/C++/Obj-C madness ((requires clangd))
+       (cc +lsp)                ; C/C++/Obj-C madness (requires clangd)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
-       (csharp +lsp)            ; unity, .NET, and mono shenanigans (csharp in emacs (requires dotnet-sdk / mono))
+       (csharp +lsp)            ; unity, .NET, and mono shenanigans (requires dotnet-sdk / mono and csharp in lsp-install-server)
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;elixir            ; erlang done right
@@ -132,11 +132,11 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
-       (java +lsp) ; the poster child for carpal tunnel syndrome (jdtls in emacs (requires jdk & possibly export JAVA_HOME=/usr/lib/jvm/default))
-       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires npm i -g typescript-language-server (requires nodejs & npm))
+       (java +lsp) ; the poster child for carpal tunnel syndrome (requires jdk, export JAVA_HOME=/usr/lib/jvm/default in PATH, and jdt-ls in lsp-install-server)
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires nodejs, npm, and npm i -g typescript-language-server))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       (latex +lsp)             ; writing papers in Emacs has never been so fun (lsp-latex in package.el (requires texlab & texlive-core))
+       (latex +lsp)             ; writing papers in Emacs has never been so fun (requires texlab, texlive-core, and lsp-latex in package.el)
        ;;lean
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -149,7 +149,7 @@
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp)            ; beautiful is better than ugly (mspyls in emacs (requires python & unzip))
+       (python +lsp)            ; beautiful is better than ugly (requires python, unzip, and mspyls in lsp-install-server)
        qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -159,12 +159,12 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
-       (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor ((requires npm i -g bash-language-server))
+       (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor (requires npm i -g bash-language-server)
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       (web +lsp)               ; the tubes (html-ls & css-ls in emacs (requires nodejs & npm))
+       (web +lsp)               ; the tubes (requires nodejs, npm, and html-ls and css-ls in lsp-install-server)
        yaml              ; JSON, but readable
 
        :email
