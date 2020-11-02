@@ -57,12 +57,13 @@
 ;; doom-dashboard
 (setq fancy-splash-image "~/.doom.d/home.png")
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-banner)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 (add-hook '+doom-dashboard-functions #'chika-widget-banner)
 (defun chika-widget-banner ()
   (let ((point (point)))
     (mapc (lambda (line)
             (insert (propertize (+doom-dashboard--center +doom-dashboard--width line)
-                                'face 'doom-dashboard-banner) " ")
+                                'face 'doom-dashboard-menu-desc) " ")
             (insert "\n"))
 	  '("⢸⣿⣿⣿⣿⠃⠄⢀⣴⡾⠃⠄⠄⠄⠄⠄⠈⠺⠟⠛⠛⠛⠛⠻⢿⣿⣿⣿⣿⣶⣤⡀⠄"
             "⢸⣿⣿⣿⡟⢀⣴⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣸⣿⣿⣿⣿⣿⣿⣿⣷"
