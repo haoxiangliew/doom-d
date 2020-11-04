@@ -108,3 +108,11 @@
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
 (setq mu4e-get-mail-command "true")
 (setq mu4e-change-filenames-when-moving t)
+
+;; rss
+(setq elfeed-feeds
+      '("https://www.phoronix.com/rss.php"
+        "http://xda-developers.com/news.rss"
+        "https://www.archlinux.org/feeds/news/"
+        "http://www.reddit.com/r/news/.rss"
+        "http://www.reddit.com/r/linux/.rss"))
