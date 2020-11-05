@@ -54,6 +54,14 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; emacs settings
+
+;; integrate system clipboard into emacs
+(setq x-select-enable-clipboard t)
+;; set default font
+(set-face-attribute 'default nil
+                    :family "Cascadia Code")
+
 ;; doom-dashboard
 (setq fancy-splash-image "~/.doom.d/home.png")
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-banner)
@@ -116,3 +124,8 @@
         "https://www.archlinux.org/feeds/news/"
         "http://www.reddit.com/r/news/.rss"
         "http://www.reddit.com/r/linux/.rss"))
+
+;; spotify
+(setq spotify-oauth2-client-secret "<client-secret>")
+(setq spotify-oauth2-client-id "<client-id>")
+(setq spotify-transport 'connect)
