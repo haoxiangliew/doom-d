@@ -54,3 +54,12 @@
 
 ;; lsp-latex
 (package! lsp-latex)
+
+;; spotify
+(package! spotify
+  :recipe (:host github :repo "danielfm/spotify.el"))
+;; oauth2
+(package! oauth2)
+
+;; elcord
+(package! elcord)
