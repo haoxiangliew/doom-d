@@ -57,7 +57,7 @@
 ;; emacs settings
 
 ;; integrate system clipboard into emacs
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 ;; set default font
 (set-face-attribute 'default nil
                     :family "Cascadia Code")
@@ -120,7 +120,6 @@
 ;; rss
 (setq elfeed-feeds
       '("https://www.phoronix.com/rss.php"
-        "http://xda-developers.com/news.rss"
         "https://www.archlinux.org/feeds/news/"
         "http://www.reddit.com/r/news/.rss"
         "http://www.reddit.com/r/linux/.rss"))
