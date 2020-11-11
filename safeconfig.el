@@ -59,8 +59,8 @@
 ;; integrate system clipboard into emacs
 (setq select-enable-clipboard t)
 ;; set default font
-(set-face-attribute 'default nil
-                    :family "Cascadia Code")
+(setq doom-font (font-spec :family "Cascadia Code" :size 14)
+      doom-variable-pitch-font (font-spec :family "Times New Roman" :size 14))
 
 ;; doom-dashboard
 (setq fancy-splash-image "~/.doom.d/home.png")
