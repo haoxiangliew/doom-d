@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 read -p "Have you installed git ripgrep and fd-find / fd (optional)? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]
