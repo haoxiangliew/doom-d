@@ -1,2 +1,3 @@
-# ignore real config.el for security
+# ignore real config.el and custom.el for security
 config.el
+custom.el
