@@ -119,7 +119,7 @@
 (defun remote-buffer-company ()
   (when (and (fboundp 'company-mode)
              (file-remote-p default-directory))
-    (company-mode -1)))
+    (company-mode 0)))
 
 ;; mu4e
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
