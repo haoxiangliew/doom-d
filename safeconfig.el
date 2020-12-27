@@ -74,6 +74,7 @@
 
 ;; elcord-mode
 (elcord-mode)
+(setq elcord-use-major-mode-as-main-icon t)
 
 ;; doom-dashboard
 ;; (setq fancy-splash-image "~/.doom.d/home.png")
@@ -121,6 +122,19 @@
              (file-remote-p default-directory))
     (company-mode 0)))
 
+;; which-key
+(setq which-key-idle-delay 0.5)
+(setq which-key-allow-multiple-replacements t)
+(after! which-key
+  (pushnew!
+   which-key-replacement-alist
+   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+))
+
+;; yassnippet
+(setq yas-triggers-in-field t)
+
 ;; mu4e
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
 (setq mu4e-get-mail-command "true")
@@ -132,3 +146,4 @@
 
 ;; tramp
 (setq tramp-default-method "ssh")
+(setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*") ;; default + 

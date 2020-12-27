@@ -128,12 +128,12 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
-       (haskell +dante +lsp)  ; a language that's lazier than I am
+       (haskell +dante +lsp)  ; a language that's lazier than I am (requires cabal-install, ghc, haskell-language-server, and ghc-mod)
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
-       (java +lsp) ; the poster child for carpal tunnel syndrome (requires jdk, export JAVA_HOME=/usr/lib/jvm/default in PATH, and jdt-ls in lsp-install-server)
-       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires nodejs, npm, npm i -g typescript-language-server, and jsts-ls in lsp-install-server)
+       (java +lsp) ; the poster child for carpal tunnel syndrome (requires jdk, export JAVA_HOME=/usr/lib/jvm/default in PATH, and jdt-ls in M-x lsp-install-server)
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires nodejs, npm, npm i -g typescript-language-server, and jsts-ls in M-x lsp-install-server)
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (latex +lsp)             ; writing papers in Emacs has never been so fun (requires texlab, texlive-core, and lsp-latex in package.el)
@@ -149,7 +149,7 @@
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp)            ; beautiful is better than ugly (requires python, unzip, and mspyls in lsp-install-server)
+       (python +lsp)            ; beautiful is better than ugly (requires python, unzip, and mspyls in M-x lsp-install-server)
        qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -164,7 +164,7 @@
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       (web +lsp)               ; the tubes (requires nodejs, npm, and html-ls and css-ls in lsp-install-server)
+       (web +lsp)               ; the tubes (requires nodejs, npm, and html-ls and css-ls in M-x lsp-install-server)
        yaml              ; JSON, but readable
 
        :email
