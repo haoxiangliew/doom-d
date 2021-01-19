@@ -60,3 +60,6 @@
 
 ;; elcord
 (package! elcord)
+
+;; nov.el
+(package! nov)
