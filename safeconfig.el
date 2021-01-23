@@ -185,6 +185,9 @@
 (setq mu4e-get-mail-command "true")
 (setq mu4e-change-filenames-when-moving t)
 
+;; org-alert
+(setq alert-default-style 'libnotify)
+
 ;; nov.el
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 

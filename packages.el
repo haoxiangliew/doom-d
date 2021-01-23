@@ -63,3 +63,6 @@
 
 ;; nov.el
 (package! nov)
+
+;; org-alert
+(package! org-alert)
