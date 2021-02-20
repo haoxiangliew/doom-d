@@ -56,13 +56,21 @@
 (package! lsp-latex)
 
 ;; spotify
-(package! counsel-spotify)
+;; (package! counsel-spotify)
 
 ;; elcord
 (package! elcord)
+
+;; esup
+(package! esup)
 
 ;; nov.el
 (package! nov)
 
 ;; org-alert
 (package! org-alert)
+
+;; very large files
+(package! vlf)
+(use-package! vlf-setup
+  :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
