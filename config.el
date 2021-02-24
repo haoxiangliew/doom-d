@@ -191,7 +191,7 @@
 ;; company-mode
 (global-company-mode 1)
 
-(setq company-idle-delay 0.1)
+(setq company-idle-delay 0.0)
 (setq company-dabbrev-downcase 0)
 ;; disable company in remote buffers
 (add-hook 'eshell-mode-hook 'disable-company-remote)
