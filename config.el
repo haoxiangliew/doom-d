@@ -182,6 +182,9 @@
   (add-to-list 'ivy-re-builders-alist '(counsel-projectile-find-file . ivy--regex-plus)))
 (setq +ivy-buffer-preview t)
 
+;; flycheck
+(setq flycheck-check-syntax-automatically '(save mode-enable))
+
 ;; lsp
 (setq lsp-log-io nil)
 
