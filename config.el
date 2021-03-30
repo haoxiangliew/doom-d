@@ -412,6 +412,29 @@
 ;; nov.el
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
+;; vterm
+(defcustom vterm-eval-cmds '(("find-file" find-file)
+                             ("message" message)
+                             ("vterm-clear-scrollback" vterm-clear-scrollback)
+                             ("magit-status" magit-status)
+                             ("magit-commit" magit-commit)
+                             ("magit-stage-file" magit-stage-file)
+                             ("magit-stage-modified" magit-stage-modified)
+                             ("magit-push" magit-push)
+                             ("sudo-find-file" doom/sudo-find-file)
+                             ("org-agenda" org-agenda-list)
+                             ("mu4e" =mu4e))
+  "Whitelisted Emacs functions that can be executed from vterm.
+You can execute Emacs functions directly from vterm buffers.  To do this,
+you have to escape the name of the function and its arguments with \e]51;E.
+See Message passing in README.
+The function you want to execute has to be in `vterm-eval-cmds'.
+`vterm-eval-cmds' has to be a list of pairs of the format:
+\(NAME-OF-COMMAND-IN-SHELL EMACS-FUNCTION)
+The need for an explicit map is to avoid arbitrary code execution."
+  :type '(alist :key-type string)
+  :group 'vterm)
+
 ;; tramp
 (after! tramp
   (setenv "SHELL" "/bin/bash")
