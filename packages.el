@@ -61,10 +61,16 @@
 ;; nov.el
 (package! nov)
 
-;; org-alert
-(package! org-alert)
+;; magit-delta
+(package! magit-delta)
 
-;; very large files
-(package! vlf)
-(use-package! vlf-setup
-  :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
+;; org-super-agenda
+(package! org-super-agenda)
+
+;; tree-sitter
+(package! tree-sitter)
+(package! tree-sitter-langs)
+
+;; canvas-emacs
+(package! canvas-emacs
+  :recipe (:host github :repo "haoxiangliew/canvas-emacs"))
