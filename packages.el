@@ -55,6 +55,9 @@
 ;; elcord
 (package! elcord)
 
+;; elfeed-goodies
+(package! elfeed-goodies)
+
 ;; esup
 (package! esup)
 

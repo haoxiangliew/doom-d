@@ -59,13 +59,14 @@
   (if (file-exists-p (expand-file-name f))
       (load-file (expand-file-name f))))
 (load-if-exists "~/.doom.d/secrets.el")
+(setq auth-sources '("~/.authinfo"))
 
 ;; integrate system clipboard into emacs
 (setq select-enable-clipboard t)
 
 ;; set default font
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 12)
-      doom-big-font (font-spec :family "CaskaydiaCove Nerd Font" :size 14)
+(setq doom-font (font-spec :family "Cascadia Code" :size 12)
+      doom-big-font (font-spec :family "Cascadia Code" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
       doom-serif-font (font-spec :family "Times New Roman" :size 12))
 
@@ -97,7 +98,7 @@
 (add-hook! '+popup-buffer-mode-hook
   (set-window-margins (selected-window) 20 20))
 
-;; prevent emacs from flickering
+;; prevent tearing
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;; add arrow key keymaps
@@ -164,7 +165,11 @@
 ;; modules settings
 
 ;; doom-dashboard
+
+;; splash image
 (setq fancy-splash-image (concat doom-private-dir "home.png"))
+
+;; ascii banner
 (setq +doom-dashboard-ascii-banner-fn #'chika-widget-banner)
 (defun chika-widget-banner ()
   (let* ((banner
@@ -194,9 +199,15 @@
                                    32)))
                "\n"))
      'face 'doom-dashboard-menu-desc)))
+
+;; set home window name
 (setq +doom-dashboard-name "*home*")
+
+;; remove default footer and loaded for custom ones
 (remove-hook '+doom-dashboard-function '(doom-dashboard-widget-footer
                                          doom-dashboard-widget-loaded))
+
+;; add custom header, loaded, and footer to dashboard
 (add-hook! 'doom-dashboard-hook)
 (setq +doom-dashboard-functions
       '(doom-dashboard-widget-banner
@@ -204,6 +215,8 @@
         doom-dashboard-widget-shortmenu
         chika-loaded
         doom-dashboard-haoxiangliew-footer))
+
+;; custom footer
 (defun doom-dashboard-haoxiangliew-footer ()
   (insert
    "\n"
@@ -217,6 +230,8 @@
                           'help-echo "Open haoxiangliew/doom.d github page")
       (buffer-string)))
    "\n"))
+
+;; custom header
 (defun doom-dashboard-widget-header ()
   (insert
    "\n"
@@ -226,7 +241,11 @@
      (concat "Hi " (user-full-name) "! Welcome to Emacs!"))
     'face 'doom-dashboard-menu-desc)
    "\n\n"))
+
+;; padding between banner and header
 (setq +doom-dashboard-banner-padding '(0 . 1))
+
+;; custom loaded
 (defun chika-loaded ()
   (insert
    "\n\n"
@@ -244,6 +263,8 @@
            (or doom-init-time
                (setq doom-init-time
                      (float-time (time-subtract (current-time) before-init-time))))))
+
+;; custom version
 (define-derived-mode +doom-dashboard-mode special-mode
   (format "Chika v%s" doom-version)
   :syntax-table nil
@@ -277,8 +298,54 @@
 ;; elcord-mode
 (elcord-mode)
 (after! elcord
-  (setq elcord-use-major-mode-as-main-icon t)
-  )
+  (setq elcord-use-major-mode-as-main-icon t))
+
+;; elfeed
+(require 'elfeed-goodies)
+(elfeed-goodies/setup)
+(add-hook! 'elfeed-search-mode-hook 'elfeed-update)
+
+(defun elfeed-v-mpv (url)
+  "Watch a video from URL in MPV"
+  (async-shell-command (format "mpv '%s'" url)))
+
+(defun elfeed-view-mpv (&optional use-generic-p)
+  "Youtube-feed link"
+  (interactive "P")
+  (let ((entries (elfeed-search-selected)))
+    (cl-loop for entry in entries
+     do (elfeed-untag entry 'unread)
+     when (elfeed-entry-link entry)
+     do (elfeed-v-mpv it))
+   (mapc #'elfeed-search-update-entry entries)
+   (unless (use-region-p) (forward-line))))
+
+(map! :leader
+      :desc "elfeed-play-video"
+      "m v" #'elfeed-view-mpv)
+
+(after! elfeed
+  (setq elfeed-search-filter "@2-weeks-ago -youtube")) 
+
+(setq elfeed-feeds (quote
+                    (("https://reddit.0qz.fun/r/popular.json" reddit popular)
+                     ("https://reddit.0qz.fun/r/emacs.json" reddit emacs)
+                     ("https://reddit.0qz.fun/r/firefox.json" reddit firefox)
+                     ("https://reddit.0qz.fun/r/linux.json" reddit linux)
+                     ("https://reddit.0qz.fun/r/nixos.json" reddit nixos)
+                     ("https://reddit.0qz.fun/r/unixporn.json" reddit unixporn)
+                     ("https://reddit.0qz.fun/r/virginiatech.json" reddit virginiatech)
+                     ("https://www.phoronix.com/rss.php" news phoronix)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCupvZG-5ko_eiXAupbDfxWw" youtube cnn)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZaT_X_mc0BI-djXOlfhqWQ" youtube vicenews)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC4xKdmAXFh4ACyhpiQ_3qBw" youtube techlead)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw" youtube ltt)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdBK94H6oZT2Q7l0-b0xmMg" youtube shortcircuit)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsvn_Po0SmunchJYOWpOxMg" youtube dunkey)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCSCoziKHqjqbox3Fv3Pb4BA" youtube esports)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCID1M0bzAxTChjFO8oEyjyw" youtube donghuap)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCYg5NWc3B8RuarSFQR8n2VA" youtube wardell)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVDepsrgho0zQxMvkik7KUw" youtube corejj))))
 
 ;; ivy
 (after! ivy
@@ -287,9 +354,6 @@
 
 ;; flycheck
 (setq flycheck-check-syntax-automatically '(save mode-enable))
-
-;; lsp
-(setq lsp-log-io nil)
 
 ;; magit
 (after! magit
@@ -372,13 +436,6 @@
       :desc "calfw-org"
       "o C" #'cfw:open-org-calendar)
 
-;; org
-(setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
-(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(defadvice! org-edit-latex-emv-after-insert ()
-  :after #'org-cdlatex-environment-indent
-  (org-edit-latex-environment))
-
 ;; org-agenda
 (setq org-agenda-include-deadlines t
       org-agenda-skip-deadline-if-done t
@@ -409,8 +466,9 @@
                                  :order 7)))
 (org-super-agenda-mode)
 
-;; nov.el
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+;; file associations
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)) ;; .epub -> nov.el
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . cpp-mode)) ;; .ino -> cpp-mode
 
 ;; vterm
 (defcustom vterm-eval-cmds '(("find-file" find-file)
@@ -418,7 +476,6 @@
                              ("vterm-clear-scrollback" vterm-clear-scrollback)
                              ("magit-status" magit-status)
                              ("magit-commit" magit-commit)
-                             ("magit-stage-file" magit-stage-file)
                              ("magit-stage-modified" magit-stage-modified)
                              ("magit-push" magit-push)
                              ("sudo-find-file" doom/sudo-find-file)
@@ -437,6 +494,5 @@ The need for an explicit map is to avoid arbitrary code execution."
 
 ;; tramp
 (after! tramp
-  (setenv "SHELL" "/bin/bash")
   (setq tramp-default-method "ssh")
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; default + 
