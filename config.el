@@ -335,8 +335,10 @@
                      ("https://reddit.0qz.fun/r/nixos.json" reddit nixos)
                      ("https://reddit.0qz.fun/r/unixporn.json" reddit unixporn)
                      ("https://reddit.0qz.fun/r/virginiatech.json" reddit virginiatech)
+                     ("https://news.ycombinator.com/rss" news hackernews)
                      ("https://www.phoronix.com/rss.php" news phoronix)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCupvZG-5ko_eiXAupbDfxWw" youtube cnn)
+                     ("https://lwn.net/headlines/newrss" news lwn)
+                     ("https://weekly.nixos.org/feeds/all.rss.xml" news nixos)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZaT_X_mc0BI-djXOlfhqWQ" youtube vicenews)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC4xKdmAXFh4ACyhpiQ_3qBw" youtube techlead)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw" youtube ltt)
@@ -362,9 +364,11 @@
 ;; company-mode
 (global-company-mode 1)
 
-(setq company-minimum-prefix-length 1)
+;; real-time completions (may slow down emacs)
+;; (setq company-minimum-prefix-length 1)
+;; (setq company-idle-delay 0.0)
+
 (setq company-tooltip-limit 10)
-(setq company-idle-delay 0.0)
 ;; disable company in remote buffers
 (add-hook 'eshell-mode-hook 'disable-company-remote)
 
@@ -472,11 +476,13 @@
 
 ;; vterm
 (defcustom vterm-eval-cmds '(("find-file" find-file)
+                             ("dired" dired .)
                              ("message" message)
                              ("vterm-clear-scrollback" vterm-clear-scrollback)
                              ("magit-status" magit-status)
                              ("magit-commit" magit-commit)
                              ("magit-stage-modified" magit-stage-modified)
+                             ("magit-stage-all" magit-stage-file *)
                              ("magit-push" magit-push)
                              ("sudo-find-file" doom/sudo-find-file)
                              ("org-agenda" org-agenda-list)
