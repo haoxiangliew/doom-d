@@ -98,7 +98,7 @@
 (add-hook! '+popup-buffer-mode-hook
   (set-window-margins (selected-window) 20 20))
 
-;; prevent tearing
+;; prevent emacs from flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;; add arrow key keymaps
@@ -365,8 +365,8 @@
 (global-company-mode 1)
 
 ;; real-time completions (may slow down emacs)
-;; (setq company-minimum-prefix-length 1)
-;; (setq company-idle-delay 0.0)
+(setq company-minimum-prefix-length 1)
+(setq company-idle-delay 0.0)
 
 (setq company-tooltip-limit 10)
 ;; disable company in remote buffers

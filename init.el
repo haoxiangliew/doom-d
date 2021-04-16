@@ -111,6 +111,7 @@
 
        :lang
        ;;agda              ; types of types of types of types...
+       ;;beancount         ; the accounting system in Emacs
        (cc +lsp)                ; C/C++/Obj-C madness (requires ccls)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
@@ -124,6 +125,7 @@
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
+       ;;factor
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
@@ -139,8 +141,7 @@
        ;;kotlin            ; a better, slicker Java(Script)
        (latex +lsp)             ; writing papers in Emacs has never been so fun (requires texlab, texlive-core, and lsp-latex in package.el)
        ;;lean
-       ;;factor
-       ;;ledger            ; an accounting system in Emacs
+       ;;ledger            ; an other accounting system in Emacs
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
@@ -159,7 +160,7 @@
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
-       ;;scheme            ; a fully conniving family of lisps
+       ;;(scheme +guile)   ; a fully conniving family of lisps
        (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor (requires npm i -g bash-language-server)
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
@@ -167,6 +168,7 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        (web +lsp)               ; the tubes (requires nodejs, npm, and html-ls and css-ls in M-x lsp-install-server)
        yaml              ; JSON, but readable
+       ;;zig               ; C, but simpler
 
        :email
        (mu4e +gmail)       ; mail like snails (requires isync and mu)
