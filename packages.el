@@ -74,6 +74,9 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 
+;; spatial-navigate
+(package! spatial-navigate)
+
 ;; canvas-emacs
 (package! canvas-emacs
   :recipe (:host github :repo "haoxiangliew/canvas-emacs"))

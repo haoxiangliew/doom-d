@@ -498,6 +498,20 @@ The need for an explicit map is to avoid arbitrary code execution."
   :type '(alist :key-type string)
   :group 'vterm)
 
+;; spatial-navigate
+(global-set-key (kbd "<M-up>") 'spatial-navigate-backward-vertical-bar)
+(global-set-key (kbd "<M-down>") 'spatial-navigate-forward-vertical-bar)
+(global-set-key (kbd "<M-left>") 'spatial-navigate-backward-horizontal-bar)
+(global-set-key (kbd "<M-right>") 'spatial-navigate-forward-horizontal-bar)
+(define-key evil-normal-state-map (kbd "M-k") 'spatial-navigate-backward-vertical-box)
+(define-key evil-normal-state-map (kbd "M-j") 'spatial-navigate-forward-vertical-box)
+(define-key evil-normal-state-map (kbd "M-h") 'spatial-navigate-backward-horizontal-box)
+(define-key evil-normal-state-map (kbd "M-l") 'spatial-navigate-forward-horizontal-box)
+(define-key evil-insert-state-map (kbd "M-k") 'spatial-navigate-backward-vertical-bar)
+(define-key evil-insert-state-map (kbd "M-j") 'spatial-navigate-forward-vertical-bar)
+(define-key evil-insert-state-map (kbd "M-h") 'spatial-navigate-backward-horizontal-bar)
+(define-key evil-insert-state-map (kbd "M-l") 'spatial-navigate-forward-horizontal-bar)
+
 ;; tramp
 (after! tramp
   (setq tramp-default-method "ssh")
