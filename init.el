@@ -81,7 +81,7 @@
        :checkers
        syntax              ; tasing you for every semicolon you forget
        (spell +everywhere +flyspell +aspell)             ; tasing you for misspelling mispelling (requires aspell aspell-en)
-       grammar           ; tasing grammar mistake every you make
+       ;;grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
@@ -112,7 +112,7 @@
        :lang
        ;;agda              ; types of types of types of types...
        ;;beancount         ; the accounting system in Emacs
-       (cc +lsp)                ; C/C++/Obj-C madness (requires ccls)
+       (cc +lsp)                ; C/C++/Obj-C madness (requires clangd)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -131,7 +131,7 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
-       (haskell +dante +lsp)  ; a language that's lazier than I am (requires cabal-install, ghc, haskell-language-server, and ghc-mod)
+       (haskell +lsp)  ; a language that's lazier than I am (requires cabal-install, ghc, haskell-language-server, and ghc-mod)
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
@@ -151,7 +151,7 @@
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp)            ; beautiful is better than ugly (requires python, unzip, and mspyls in M-x lsp-install-server)
+       (python +lsp +pyright)            ; beautiful is better than ugly (requires python, unzip, and mspyls in M-x lsp-install-server)
        qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -161,7 +161,7 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor (requires npm i -g bash-language-server)
+       (sh +lsp +fish)                ; she sells {ba,z,fi}sh shells on the C xor (requires npm i -g bash-language-server)
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?

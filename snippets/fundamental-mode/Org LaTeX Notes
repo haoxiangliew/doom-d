@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: Org LaTeX Notes
+# --
+#+TITLE:
+#+AUTHOR: ${1:`(user-full-name)`}
+
+#+PROPERTY: ATTACH_DIR pictures
+#+PROPERTY: ATTACH_DIR_INHERIT nil
+
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [12pt, letterpaper]
+
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[english]{babel}
+#+LATEX_HEADER: \usepackage{tabularx}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{xcolor}
+
+#+LATEX_HEADER: \newcommand{\degree}{\ensuremath{^{\circ}}}
+#+LATEX_HEADER: \newcommand{\angstrom}{\textup{\AA}}
+
+#+OPTIONS: tags:nil
+
+#+LATEX: \newpage

@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dracula)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -68,7 +68,7 @@
 (setq doom-font (font-spec :family "Cascadia Code" :size 12)
       doom-big-font (font-spec :family "Cascadia Code" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
-      doom-serif-font (font-spec :family "Times New Roman" :size 12))
+      doom-serif-font (font-spec :family "CMU Serif" :size 12))
 
 ;; switch to the new window after splitting
 (setq evil-split-window-below t
@@ -100,20 +100,6 @@
 
 ;; prevent emacs from flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;; add arrow key keymaps
-(map! :map evil-window-map
-      "SPC" #'rotate-layout
-      ;; navigation
-      "<left>"    #'evil-window-left
-      "<right>"   #'evil-window-right
-      "<up>"      #'evil-window-up
-      "<down>"    #'evil-window-down
-      ;; swap windows
-      "C-<left>"    #'+evil/window-move-left
-      "C-<right>"   #'+evil/window-move-right
-      "C-<up>"      #'+evil/window-move-up
-      "C-<down>"    #'+evil/window-move-down)
 
 ;; emacs 27 ligatures
 (use-package composite
@@ -198,7 +184,7 @@
                  line (make-string (max 0 (- longest-line (length line)))
                                    32)))
                "\n"))
-     'face 'doom-dashboard-menu-desc)))
+     'face 'doom-dashboard-menu-title)))
 
 ;; set home window name
 (setq +doom-dashboard-name "*home*")
