@@ -68,6 +68,7 @@
 (setq doom-font (font-spec :family "Cascadia Code" :size 12)
       doom-big-font (font-spec :family "Cascadia Code" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
+      doom-unicode-font (font-spec :family "Cascadia Code" :size 12)
       doom-serif-font (font-spec :family "CMU Serif" :size 12))
 
 ;; switch to the new window after splitting
@@ -400,8 +401,8 @@
 (setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
 
 ;; mu4e
+(add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
-
 (set-email-account! "gmail"
                     '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
                       (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
