@@ -65,10 +65,10 @@
 (setq select-enable-clipboard t)
 
 ;; set default font
-(setq doom-font (font-spec :family "Cascadia Code" :size 12)
-      doom-big-font (font-spec :family "Cascadia Code" :size 14)
+(setq doom-font (font-spec :family "Jetbrains Mono" :size 12)
+      doom-big-font (font-spec :family "Jetbrains Mono" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
-      doom-unicode-font (font-spec :family "Cascadia Code" :size 12)
+      doom-unicode-font (font-spec :family "Jetbrains Mono" :size 12)
       doom-serif-font (font-spec :family "CMU Serif" :size 12))
 
 ;; switch to the new window after splitting
@@ -245,15 +245,17 @@
 (defun chika-display-benchmark (&optional return-p)
   (funcall (if return-p #'format #'message)
            "Chika loaded %d packages across %d modules in %.03fs!"
-           (- (length load-path) (length doom--initial-load-path))
+           (- (length load-path) (length (get 'load-path 'initial-value)))
            (if doom-modules (hash-table-count doom-modules) 0)
            (or doom-init-time
                (setq doom-init-time
                      (float-time (time-subtract (current-time) before-init-time))))))
 
+
 ;; custom version
 (define-derived-mode +doom-dashboard-mode special-mode
   (format "Chika v%s" doom-version)
+  "Major mode for the DOOM dashboard buffer."
   :syntax-table nil
   :abbrev-table nil
   (buffer-disable-undo)
@@ -262,13 +264,18 @@
   (setq-local show-trailing-whitespace nil)
   (setq-local hscroll-margin 0)
   (setq-local tab-width 2)
+  ;; Don't scroll to follow cursor
   (setq-local scroll-preserve-screen-position nil)
   (setq-local auto-hscroll-mode nil)
+  ;; Line numbers are ugly with large margins
   (setq-local display-line-numbers-type nil)
   (cl-loop for (car . _cdr) in fringe-indicator-alist
            collect (cons car nil) into alist
-           finally do (setq fringe-indicator-alist alist))
-  (add-hook 'post-command-hook #'+doom-dashboard-reposition-point-h nil t))
+           finally do (setq-local fringe-indicator-alist alist))
+  ;; Ensure point is always on a button
+  (add-hook 'post-command-hook #'+doom-dashboard-reposition-point-h nil 'local)
+  ;; Never show hl-line, because the margin cut-off looks ugly!
+  (face-remap-add-relative 'hl-line '(:background nil)))
 
 ;; calc
 (setq calc-angle-mode 'rad
@@ -317,12 +324,10 @@
 (setq elfeed-feeds (quote
                     (("https://reddit.0qz.fun/r/popular.json" reddit popular)
                      ("https://reddit.0qz.fun/r/emacs.json" reddit emacs)
-                     ("https://reddit.0qz.fun/r/firefox.json" reddit firefox)
                      ("https://reddit.0qz.fun/r/linux.json" reddit linux)
                      ("https://reddit.0qz.fun/r/nixos.json" reddit nixos)
                      ("https://reddit.0qz.fun/r/unixporn.json" reddit unixporn)
                      ("https://reddit.0qz.fun/r/virginiatech.json" reddit virginiatech)
-                     ("https://news.ycombinator.com/rss" news hackernews)
                      ("https://www.phoronix.com/rss.php" news phoronix)
                      ("https://lwn.net/headlines/newrss" news lwn)
                      ("https://weekly.nixos.org/feeds/all.rss.xml" news nixos)
