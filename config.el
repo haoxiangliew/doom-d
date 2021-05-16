@@ -65,10 +65,10 @@
 (setq select-enable-clipboard t)
 
 ;; set default font
-(setq doom-font (font-spec :family "Jetbrains Mono" :size 12)
-      doom-big-font (font-spec :family "Jetbrains Mono" :size 14)
+(setq doom-font (font-spec :family "Cascadia Code" :size 12)
+      doom-big-font (font-spec :family "Cascadia Code" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
-      doom-unicode-font (font-spec :family "Jetbrains Mono" :size 12)
+      doom-unicode-font (font-spec :family "Cascadia Code" :size 12)
       doom-serif-font (font-spec :family "CMU Serif" :size 12))
 
 ;; switch to the new window after splitting
@@ -319,7 +319,7 @@
       "m v" #'elfeed-view-mpv)
 
 (after! elfeed
-  (setq elfeed-search-filter "@2-weeks-ago -youtube")) 
+  (setq elfeed-search-filter "@2-weeks-ago -youtube"))
 
 (setq elfeed-feeds (quote
                     (("https://reddit.0qz.fun/r/popular.json" reddit popular)
@@ -406,6 +406,7 @@
 (setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
 
 ;; mu4e
+;; intelligently load mu4e location in NixOS
 (add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
 (set-email-account! "gmail"
@@ -467,16 +468,16 @@
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . cpp-mode)) ;; .ino -> cpp-mode
 
 ;; vterm
-(defcustom vterm-eval-cmds '(("find-file" find-file)
+(defcustom vterm-eval-cmds '(("ff" find-file)
                              ("dired" dired .)
                              ("message" message)
-                             ("vterm-clear-scrollback" vterm-clear-scrollback)
+                             ("clear" vterm-clear-scrollback)
                              ("magit-status" magit-status)
                              ("magit-commit" magit-commit)
                              ("magit-stage-modified" magit-stage-modified)
                              ("magit-stage-all" magit-stage-file *)
                              ("magit-push" magit-push)
-                             ("sudo-find-file" doom/sudo-find-file)
+                             ("sudo-ff" doom/sudo-find-file)
                              ("org-agenda" org-agenda-list)
                              ("mu4e" =mu4e))
   "Whitelisted Emacs functions that can be executed from vterm.
