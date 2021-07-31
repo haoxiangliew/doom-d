@@ -52,14 +52,11 @@
 ;; matlab-mode
 (package! matlab-mode)
 
+;; arduino-mode
+(package! arduino-mode)
+
 ;; elcord
 (package! elcord)
-
-;; elfeed-goodies
-(package! elfeed-goodies)
-
-;; esup
-(package! esup)
 
 ;; nov.el
 (package! nov)
@@ -70,12 +67,22 @@
 ;; org-super-agenda
 (package! org-super-agenda)
 
-;; tree-sitter
-(package! tree-sitter)
-(package! tree-sitter-langs)
+;; org-timed-alerts
+(package! org-timed-alerts
+  :recipe (:host github :repo "legalnonsense/org-timed-alerts"))
+
+;; alert
+(package! alert)
+
+;; verilog-mode
+(package! verilog-mode)
 
 ;; spatial-navigate
 (package! spatial-navigate)
+
+;; tree-sitter
+(package! tree-sitter)
+(package! tree-sitter-langs)
 
 ;; canvas-emacs
 (package! canvas-emacs

@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-solarized-dark)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -65,10 +65,10 @@
 (setq select-enable-clipboard t)
 
 ;; set default font
-(setq doom-font (font-spec :family "Cascadia Code" :size 12)
-      doom-big-font (font-spec :family "Cascadia Code" :size 14)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 12)
-      doom-unicode-font (font-spec :family "Cascadia Code" :size 12)
+      doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
       doom-serif-font (font-spec :family "CMU Serif" :size 12))
 
 ;; switch to the new window after splitting
@@ -94,60 +94,8 @@
                           (eq buffer-file-coding-system 'utf-8)))))
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 
-;; add padding to prevent interference with rounded corners
-(set-window-margins (selected-window) 20 20)
-(add-hook! '+popup-buffer-mode-hook
-  (set-window-margins (selected-window) 20 20))
-
-;; prevent emacs from flickering
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;; emacs 27 ligatures
-(use-package composite
-  :defer t
-  :init
-  (defvar composition-ligature-table (make-char-table nil))
-  :hook
-  (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-    . (lambda () (setq-local composition-function-table composition-ligature-table))))
-  :config
-  ;; support ligatures, some toned down to prevent hang
-  (when (version<= "27.0" emacs-version)
-    (let ((alist
-           '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
-             (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
-             (36 . ".\\(?:\\(>\\)>?\\)")
-             (37 . ".\\(?:\\(%\\)%?\\)")
-             (38 . ".\\(?:\\(&\\)&?\\)")
-             (42 . ".\\(?:\\(\\*\\*\\|[*>]\\)[*>]?\\)")
-             ;; (42 . ".\\(?:\\(\\*\\*\\|[*/>]\\).?\\)")
-             (43 . ".\\(?:\\([>]\\)>?\\)")
-             ;; (43 . ".\\(?:\\(\\+\\+\\|[+>]\\).?\\)")
-             (45 . ".\\(?:\\(-[->]\\|<<\\|>>\\|[-<>|~]\\)[-<>|~]?\\)")
-             ;; (46 . ".\\(?:\\(\\.[.<]\\|[-.=]\\)[-.<=]?\\)")
-             (46 . ".\\(?:\\(\\.<\\|[-=]\\)[-<=]?\\)")
-             (47 . ".\\(?:\\(//\\|==\\|[=>]\\)[/=>]?\\)")
-             ;; (47 . ".\\(?:\\(//\\|==\\|[*/=>]\\).?\\)")
-             (48 . ".\\(?:\\(x[a-fA-F0-9]\\).?\\)")
-             (58 . ".\\(?:\\(::\\|[:<=>]\\)[:<=>]?\\)")
-             (59 . ".\\(?:\\(;\\);?\\)")
-             (60 . ".\\(?:\\(!--\\|\\$>\\|\\*>\\|\\+>\\|-[-<>|]\\|/>\\|<[-<=]\\|=[<>|]\\|==>?\\||>\\||||?\\|~[>~]\\|[$*+/:<=>|~-]\\)[$*+/:<=>|~-]?\\)")
-             (61 . ".\\(?:\\(!=\\|/=\\|:=\\|<<\\|=[=>]\\|>>\\|[=>]\\)[=<>]?\\)")
-             (62 . ".\\(?:\\(->\\|=>\\|>[-=>]\\|[-:=>]\\)[-:=>]?\\)")
-             (63 . ".\\(?:\\([.:=?]\\)[.:=?]?\\)")
-             (91 . ".\\(?:\\(|\\)[]|]?\\)")
-             ;; (92 . ".\\(?:\\([\\n]\\)[\\]?\\)")
-             (94 . ".\\(?:\\(=\\)=?\\)")
-             (95 . ".\\(?:\\(|_\\|[_]\\)_?\\)")
-             (119 . ".\\(?:\\(ww\\)w?\\)")
-             (123 . ".\\(?:\\(|\\)[|}]?\\)")
-             (124 . ".\\(?:\\(->\\|=>\\||[-=>]\\||||*>\\|[]=>|}-]\\).?\\)")
-             (126 . ".\\(?:\\(~>\\|[-=>@~]\\)[-=>@~]?\\)"))))
-      (dolist (char-regexp alist)
-        (set-char-table-range composition-ligature-table (car char-regexp)
-                              `([,(cdr char-regexp) 0 font-shape-gstring]))))
-    (set-char-table-parent composition-ligature-table composition-function-table))
-  )
+;; scroll wheel speed = scrolling speed (for mx master wheel)
+(setq mouse-wheel-progressive-speed nil)
 
 ;; modules settings
 
@@ -225,7 +173,7 @@
    (propertize
     (+doom-dashboard--center
      +doom-dashboard--width
-     (concat "Hi " (user-full-name) "! Welcome to Emacs!"))
+     (concat "Hi " (user-full-name) "! Welcome to Chika Emacs!"))
     'face 'doom-dashboard-menu-desc)
    "\n\n"))
 
@@ -251,10 +199,9 @@
                (setq doom-init-time
                      (float-time (time-subtract (current-time) before-init-time))))))
 
-
 ;; custom version
 (define-derived-mode +doom-dashboard-mode special-mode
-  (format "Chika v%s" doom-version)
+  (format "Chika Fujiwara v%s" doom-version)
   "Major mode for the DOOM dashboard buffer."
   :syntax-table nil
   :abbrev-table nil
@@ -274,8 +221,11 @@
            finally do (setq-local fringe-indicator-alist alist))
   ;; Ensure point is always on a button
   (add-hook 'post-command-hook #'+doom-dashboard-reposition-point-h nil 'local)
-  ;; Never show hl-line, because the margin cut-off looks ugly!
-  (face-remap-add-relative 'hl-line '(:background nil)))
+  ;; hl-line produces an ugly cut-off line highlight in the dashboard, so don't
+  ;; activate it there (by pretending it's already active).
+  (setq-local hl-line-mode t))
+
+;; modules
 
 ;; calc
 (setq calc-angle-mode 'rad
@@ -287,58 +237,100 @@
 (after! evil
   (setq evil-ex-substitute-global t))
 (setq evil-goggles-enable-record-macro nil)
-(define-key evil-normal-state-map (kbd "q") (lambda () (interactive) (kill-buffer) (doom/window-maximize-buffer)))
+;; (define-key evil-normal-state-map (kbd "q") (lambda () (interactive) (kill-buffer) (doom/window-maximize-buffer)))
 
 ;; elcord-mode
 (elcord-mode)
+(setq elcord-mode-icon-alist '((+doom-dashboard-mode . "chika_icon")
+                               (c-mode . "c-mode_icon")
+                               (c++-mode . "cpp-mode_icon")
+                               (clojure-mode . "clojure-mode_icon")
+                               (csharp-mode . "csharp-mode_icon")
+                               (comint-mode . "comint-mode_icon")
+                               (cperl-mode . "cperl-mode_icon")
+                               (emacs-lisp-mode . (elcord--editor-icon))
+                               (enh-ruby-mode . "ruby-mode_icon")
+                               (erc-mode . "irc-mode_icon")
+                               (forth-mode . "forth-mode_icon")
+                               (fsharp-mode . "fsharp-mode_icon")
+                               (gdscript-mode . "gdscript-mode_icon")
+                               (haskell-mode . "haskell-mode_icon")
+                               (haskell-interactive-mode . "haskell-mode_icon")
+                               (java-mode . "java-mode_icon")
+                               (js-mode . "javascript-mode_icon")
+                               (kotlin-mode . "kotlin-mode_icon")
+                               (go-mode . "go-mode_icon")
+                               (latex-mode . "latex-mode_icon")
+                               (lisp-mode . "lisp-mode_icon")
+                               (magit-mode . "magit-mode_icon")
+                               (markdown-mode . "markdown-mode_icon")
+                               (meson-mode . "meson-mode_icon")
+                               (nix-mode . "nix-mode_icon")
+                               (org-mode . "org-mode_icon")
+                               (racket-mode . "racket-mode_icon")
+                               (ruby-mode . "ruby-mode_icon")
+                               (rust-mode . "rust-mode_icon")
+                               (rustic-mode . "rust-mode_icon")
+                               (zig-mode . "zig-mode_icon")
+                               ("^slime-.*" . "lisp-mode_icon")
+                               ("^sly-.*$" . "lisp-mode_icon")
+                               (typescript-mode . "typescript-mode_icon")
+                               (php-mode . "php-mode_icon")
+                               (python-mode . "python-mode_icon")))
 (after! elcord
+  (setq elcord-client-id "865374458532462602")
+  (setq elcord-editor-icon "emacs_icon")
   (setq elcord-use-major-mode-as-main-icon t))
 
 ;; elfeed
-(require 'elfeed-goodies)
-(elfeed-goodies/setup)
 (add-hook! 'elfeed-search-mode-hook 'elfeed-update)
 
-(defun elfeed-v-mpv (url)
-  "Watch a video from URL in MPV"
-  (async-shell-command (format "mpv '%s'" url)))
-
-(defun elfeed-view-mpv (&optional use-generic-p)
-  "Youtube-feed link"
-  (interactive "P")
-  (let ((entries (elfeed-search-selected)))
-    (cl-loop for entry in entries
-     do (elfeed-untag entry 'unread)
-     when (elfeed-entry-link entry)
-     do (elfeed-v-mpv it))
-   (mapc #'elfeed-search-update-entry entries)
-   (unless (use-region-p) (forward-line))))
+(defun elfeed-play-with-mpv ()
+  "Play entry link with mpv."
+  (interactive)
+  (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single)))
+        (quality-arg "")
+        (quality-val (completing-read "Max height resolution (0 for unlimited): " '("0" "480" "720" "1080") nil nil)))
+    (setq quality-val (string-to-number quality-val))
+    (message "Opening %s with height≤%s with mpv..." (elfeed-entry-link entry) quality-val)
+    (when (< 0 quality-val)
+      (setq quality-arg (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best --sub-auto=fuzzy --ytdl-raw-options=ignore-config=,sub-format=en,write-sub=" quality-val)))
+    (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
 
 (map! :leader
-      :desc "elfeed-play-video"
-      "m v" #'elfeed-view-mpv)
+      :desc "elfeed-play-with-mpv"
+      "m v" #'elfeed-play-with-mpv)
+
+(defun elfeed-open-with-eww ()
+  "Open in eww with `eww-readable'."
+  (interactive)
+  (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single))))
+    (eww  (elfeed-entry-link entry))
+    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
+
+(map! :leader
+      :desc "elfeed-open-with-eww"
+      "m e" #'elfeed-open-with-eww)
 
 (after! elfeed
   (setq elfeed-search-filter "@2-weeks-ago -youtube"))
 
 (setq elfeed-feeds (quote
-                    (("https://reddit.0qz.fun/r/popular.json" reddit popular)
-                     ("https://reddit.0qz.fun/r/emacs.json" reddit emacs)
-                     ("https://reddit.0qz.fun/r/linux.json" reddit linux)
-                     ("https://reddit.0qz.fun/r/nixos.json" reddit nixos)
-                     ("https://reddit.0qz.fun/r/unixporn.json" reddit unixporn)
-                     ("https://reddit.0qz.fun/r/virginiatech.json" reddit virginiatech)
+                    (("https://reddit.com/r/popular.rss" reddit popular)
+                     ("https://reddit.com/r/emacs.rss" reddit emacs)
+                     ("https://reddit.com/r/linux.rss" reddit linux)
+                     ("https://reddit.com/r/nixos.rss" reddit nixos)
+                     ("https://reddit.com/r/unixporn.rss" reddit unixporn)
+                     ("https://reddit.com/r/virginiatech.rss" reddit virginiatech)
                      ("https://www.phoronix.com/rss.php" news phoronix)
                      ("https://lwn.net/headlines/newrss" news lwn)
                      ("https://weekly.nixos.org/feeds/all.rss.xml" news nixos)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZaT_X_mc0BI-djXOlfhqWQ" youtube vicenews)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC4xKdmAXFh4ACyhpiQ_3qBw" youtube techlead)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw" youtube ltt)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdBK94H6oZT2Q7l0-b0xmMg" youtube shortcircuit)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsvn_Po0SmunchJYOWpOxMg" youtube dunkey)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCSCoziKHqjqbox3Fv3Pb4BA" youtube esports)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCID1M0bzAxTChjFO8oEyjyw" youtube donghuap)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCYg5NWc3B8RuarSFQR8n2VA" youtube wardell)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVDepsrgho0zQxMvkik7KUw" youtube corejj))))
 
 ;; ivy
@@ -353,28 +345,42 @@
 (after! magit
   (magit-delta-mode +1))
 
-;; company-mode
-(global-company-mode 1)
+;; company
 
 ;; real-time completions (may slow down emacs)
 (setq company-minimum-prefix-length 1)
 (setq company-idle-delay 0.0)
 
-(setq company-tooltip-limit 10)
 ;; disable company in remote buffers
 (add-hook 'eshell-mode-hook 'disable-company-remote)
-
 (defun disable-company-remote ()
   (when (and (fboundp 'company-mode)
              (file-remote-p default-directory))
     (company-mode -1)))
 
+;; lsp
+(setq lsp-ui-sideline-enable nil
+      lsp-ui-doc-enable nil
+      lsp-enable-symbol-highlighting nil)
+
 ;; tree-sitter
 (use-package! tree-sitter
+  :when (bound-and-true-p module-file-suffix)
+  :hook (prog-mode . tree-sitter-mode)
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
   :config
   (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (defadvice! doom-tree-sitter-fail-gracefully-a (orig-fn &rest args)
+    "Don't break with errors when current major mode lacks tree-sitter support."
+    :around #'tree-sitter-mode
+    (condition-case e
+        (apply orig-fn args)
+      (error
+       (unless (string-match-p (concat "^Cannot find shared library\\|"
+                                       "^No language registered\\|"
+                                       "cannot open shared object file")
+                            (error-message-string e))
+            (signal (car e) (cadr e)))))))
 
 ;; canvas-emacs
 (require 'canvas-utils)
@@ -399,16 +405,23 @@
 
 ;; latex
 (setq TeX-save-query nil
-      TeX-show-compilation t
-      TeX-command-extra-options "-shell-escape")
-(after! latex
-  (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
+      TeX-show-compilation t)
 (setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
+
+;; pdf-tools
+(setq pdf-view-midnight-colors '("#839496" . "#002b36"))
 
 ;; mu4e
 ;; intelligently load mu4e location in NixOS
 (add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
+;; don't need to run cleanup after indexing for gmail
+(setq mu4e-index-cleanup nil
+      ;; because gmail uses labels as folders we can use lazy check since
+      ;; messages don't really "move"
+      mu4e-index-lazy-check t)
+(setq +mu4e-gmail-accounts '(("haoxiangliew@gmail.com" . "/gmail")
+                            ("haoxiangliew@vt.edu" . "/vtedu")))
 (set-email-account! "gmail"
                     '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
                       (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
@@ -417,7 +430,6 @@
                       (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
                     t)
-
 (set-email-account! "vtedu"
                     '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
                       (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
@@ -426,6 +438,9 @@
                       (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
                     t)
+
+;; alert
+(setq alert-default-style 'libnotify)
 
 ;; calfw
 (setq cfw:org-overwrite-default-keybinding t)
@@ -465,31 +480,7 @@
 
 ;; file associations
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)) ;; .epub -> nov.el
-(add-to-list 'auto-mode-alist '("\\.ino\\'" . cpp-mode)) ;; .ino -> cpp-mode
-
-;; vterm
-(defcustom vterm-eval-cmds '(("ff" find-file)
-                             ("dired" dired .)
-                             ("message" message)
-                             ("clear" vterm-clear-scrollback)
-                             ("magit-status" magit-status)
-                             ("magit-commit" magit-commit)
-                             ("magit-stage-modified" magit-stage-modified)
-                             ("magit-stage-all" magit-stage-file *)
-                             ("magit-push" magit-push)
-                             ("sudo-ff" doom/sudo-find-file)
-                             ("org-agenda" org-agenda-list)
-                             ("mu4e" =mu4e))
-  "Whitelisted Emacs functions that can be executed from vterm.
-You can execute Emacs functions directly from vterm buffers.  To do this,
-you have to escape the name of the function and its arguments with \e]51;E.
-See Message passing in README.
-The function you want to execute has to be in `vterm-eval-cmds'.
-`vterm-eval-cmds' has to be a list of pairs of the format:
-\(NAME-OF-COMMAND-IN-SHELL EMACS-FUNCTION)
-The need for an explicit map is to avoid arbitrary code execution."
-  :type '(alist :key-type string)
-  :group 'vterm)
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . arduino-mode)) ;; .ino -> arduino
 
 ;; spatial-navigate
 (global-set-key (kbd "<M-up>") 'spatial-navigate-backward-vertical-bar)
@@ -508,4 +499,7 @@ The need for an explicit map is to avoid arbitrary code execution."
 ;; tramp
 (after! tramp
   (setq tramp-default-method "ssh")
-  (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; default + 
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))
+(add-hook 'find-file-hook
+          (lambda () (when (file-remote-p default-directory)
+                       (setq-local projectile-mode-line "Projectile"))))

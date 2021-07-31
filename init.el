@@ -20,10 +20,11 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +tng)           ; the ultimate code completion backend (+tng is to complete with tab)
+       (company +tng)           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy +fuzzy +prescient +icons)               ; a search engine for love and life
+       ;;(ivy +fuzzy +prescient +icons)               ; a search engine for love and life
+       (vertico +icons)           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -31,7 +32,6 @@
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji +ascii +github +unicode)  ; 🙂
-       ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        indent-guides     ; highlighted indent columns
@@ -80,7 +80,7 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       (spell +everywhere +flyspell +aspell)             ; tasing you for misspelling mispelling (requires aspell aspell-en)
+       (spell +everywhere +flyspell) ; tasing you for misspelling mispelling (requires aspell aspell-en)
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -93,7 +93,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       lsp
+       lsp               ; M-x vscode
        (magit +forge)             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -111,8 +111,8 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       ;;beancount         ; the accounting system in Emacs
-       (cc +lsp)                ; C/C++/Obj-C madness (requires clangd)
+       ;;beancount         ; mind the GAAP
+       (cc +lsp)                ; C > C++ == 1 (requires clangd)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -134,14 +134,14 @@
        (haskell +lsp)  ; a language that's lazier than I am (requires cabal-install, ghc, haskell-language-server, and ghc-mod)
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       json              ; At least it ain't XML
+       (json +lsp)              ; At least it ain't XML
        (java +lsp) ; the poster child for carpal tunnel syndrome (requires jdk, export JAVA_HOME=/usr/lib/jvm/default in PATH, and jdt-ls in M-x lsp-install-server)
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here)))))) (requires nodejs, npm, npm i -g typescript-language-server, and jsts-ls in M-x lsp-install-server)
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       (latex +lsp)             ; writing papers in Emacs has never been so fun (requires texlab, texlive-core, and lsp-latex in package.el)
-       ;;lean
-       ;;ledger            ; an other accounting system in Emacs
+       (latex +lsp)             ; writing papers in Emacs has never been so fun (requires texlab and texlive-core)
+       ;;lean              ; for folks with too much to prove
+       ;;ledger            ; be audit you can be
        lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
@@ -152,7 +152,7 @@
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python +lsp +pyright)            ; beautiful is better than ugly (requires python, unzip, and mspyls in M-x lsp-install-server)
-       qt                ; the 'cutest' gui framework ever
+       ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        rest              ; Emacs as a REST client
@@ -167,11 +167,11 @@
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        (web +lsp)               ; the tubes (requires nodejs, npm, and html-ls and css-ls in M-x lsp-install-server)
-       yaml              ; JSON, but readable
+       (yaml +lsp)              ; JSON, but readable
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +gmail)       ; mail like snails (requires isync and mu)
+       (mu4e +org +gmail)       ; (requires isync and mu)
        ;;notmuch
        ;;(wanderlust +gmail)
 
