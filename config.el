@@ -97,6 +97,10 @@
 ;; scroll wheel speed = scrolling speed (for mx master wheel)
 (setq mouse-wheel-progressive-speed nil)
 
+;; Add padding to compensate for rounded corners
+(setq-default left-margin-width 1 right-margin-width 1)
+(set-window-buffer nil (current-buffer))
+
 ;; modules settings
 
 ;; doom-dashboard
