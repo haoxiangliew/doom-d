@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-dark)
+(setq doom-theme 'doom-dracula)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -178,7 +178,7 @@
     (+doom-dashboard--center
      +doom-dashboard--width
      (concat "Hi " (user-full-name) "! Welcome to Chika Emacs!"))
-    'face 'doom-dashboard-menu-desc)
+    'face 'doom-dashboard-menu-title)
    "\n\n"))
 
 ;; padding between banner and header
@@ -424,24 +424,26 @@
       ;; because gmail uses labels as folders we can use lazy check since
       ;; messages don't really "move"
       mu4e-index-lazy-check t)
+(setq mu4e-context-policy 'ask-if-none
+      mu4e-compose-context-policy 'always-ask)
 (setq +mu4e-gmail-accounts '(("haoxiangliew@gmail.com" . "/gmail")
                             ("haoxiangliew@vt.edu" . "/vtedu")))
-(set-email-account! "gmail"
-                    '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
-                      (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
-                      (mu4e-trash-folder       . "/gmail[Gmail].Trash")
-                      (mu4e-refile-folder      . "/gmail[Gmail].All Mail")
-                      (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
-                      (mu4e-compose-signature  . "---\nHao Xiang Liew"))
-                    t)
-(set-email-account! "vtedu"
-                    '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
-                      (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
-                      (mu4e-trash-folder       . "/vtedu[vt.edu].Trash")
-                      (mu4e-refile-folder      . "/vtedu[vt.edu].All Mail")
-                      (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
-                      (mu4e-compose-signature  . "---\nHao Xiang Liew"))
-                    t)
+;; (set-email-account! "gmail"
+;;                     '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
+;;                       (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
+;;                       (mu4e-trash-folder       . "/gmail[Gmail].Trash")
+;;                       (mu4e-refile-folder      . "/gmail[Gmail].All Mail")
+;;                       (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
+;;                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
+;;                     t)
+;; (set-email-account! "vtedu"
+;;                     '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
+;;                       (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
+;;                       (mu4e-trash-folder       . "/vtedu[vt.edu].Trash")
+;;                       (mu4e-refile-folder      . "/vtedu[vt.edu].All Mail")
+;;                       (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
+;;                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
+;;                     t)
 
 ;; alert
 (setq alert-default-style 'libnotify)
@@ -481,6 +483,11 @@
                                  :tag "classes"
                                  :order 7)))
 (org-super-agenda-mode)
+
+;; org-wild-notifier
+(use-package org-wild-notifier
+  :config
+  (org-wild-notifier-mode))
 
 ;; file associations
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)) ;; .epub -> nov.el
