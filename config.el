@@ -252,9 +252,11 @@
                                (csharp-mode . "csharp-mode_icon")
                                (comint-mode . "comint-mode_icon")
                                (cperl-mode . "cperl-mode_icon")
-                               (emacs-lisp-mode . (elcord--editor-icon))
+                               ;; (emacs-lisp-mode . (elcord--editor-icon))
+                               (emacs-lisp-mode . "emacs_pen_icon")
                                (enh-ruby-mode . "ruby-mode_icon")
                                (erc-mode . "irc-mode_icon")
+                               (eshell-mode . "comint-mode_icon")
                                (forth-mode . "forth-mode_icon")
                                (fsharp-mode . "fsharp-mode_icon")
                                (gdscript-mode . "gdscript-mode_icon")
@@ -269,8 +271,10 @@
                                (magit-mode . "magit-mode_icon")
                                (markdown-mode . "markdown-mode_icon")
                                (meson-mode . "meson-mode_icon")
+                               (mu4e . "emacs_pen_icon")
                                (nix-mode . "nix-mode_icon")
                                (org-mode . "org-mode_icon")
+                               (org-agenda-mode . "org-mode_icon")
                                (racket-mode . "racket-mode_icon")
                                (ruby-mode . "ruby-mode_icon")
                                (rust-mode . "rust-mode_icon")
@@ -279,6 +283,7 @@
                                ("^slime-.*" . "lisp-mode_icon")
                                ("^sly-.*$" . "lisp-mode_icon")
                                (typescript-mode . "typescript-mode_icon")
+                               (vterm-mode . "comint-mode_icon")
                                (php-mode . "php-mode_icon")
                                (python-mode . "python-mode_icon")))
 (after! elcord
@@ -367,25 +372,6 @@
       lsp-ui-doc-enable nil
       lsp-enable-symbol-highlighting nil)
 
-;; tree-sitter
-(use-package! tree-sitter
-  :when (bound-and-true-p module-file-suffix)
-  :hook (prog-mode . tree-sitter-mode)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-  :config
-  (require 'tree-sitter-langs)
-  (defadvice! doom-tree-sitter-fail-gracefully-a (orig-fn &rest args)
-    "Don't break with errors when current major mode lacks tree-sitter support."
-    :around #'tree-sitter-mode
-    (condition-case e
-        (apply orig-fn args)
-      (error
-       (unless (string-match-p (concat "^Cannot find shared library\\|"
-                                       "^No language registered\\|"
-                                       "cannot open shared object file")
-                            (error-message-string e))
-            (signal (car e) (cadr e)))))))
-
 ;; canvas-emacs
 (require 'canvas-utils)
 (setq canvas-baseurl "https://canvas.vt.edu")
@@ -420,30 +406,27 @@
 (add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
 ;; don't need to run cleanup after indexing for gmail
-(setq mu4e-index-cleanup nil
-      ;; because gmail uses labels as folders we can use lazy check since
-      ;; messages don't really "move"
-      mu4e-index-lazy-check t)
+(setq mu4e-index-cleanup nil)
 (setq mu4e-context-policy 'ask-if-none
       mu4e-compose-context-policy 'always-ask)
 (setq +mu4e-gmail-accounts '(("haoxiangliew@gmail.com" . "/gmail")
                             ("haoxiangliew@vt.edu" . "/vtedu")))
-;; (set-email-account! "gmail"
-;;                     '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
-;;                       (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
-;;                       (mu4e-trash-folder       . "/gmail[Gmail].Trash")
-;;                       (mu4e-refile-folder      . "/gmail[Gmail].All Mail")
-;;                       (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
-;;                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
-;;                     t)
-;; (set-email-account! "vtedu"
-;;                     '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
-;;                       (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
-;;                       (mu4e-trash-folder       . "/vtedu[vt.edu].Trash")
-;;                       (mu4e-refile-folder      . "/vtedu[vt.edu].All Mail")
-;;                       (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
-;;                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
-;;                     t)
+(set-email-account! "gmail"
+                    '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
+                      (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
+                      (mu4e-trash-folder       . "/gmail[Gmail].Trash")
+                      (mu4e-refile-folder      . "/gmail[Gmail].All Mail")
+                      (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
+                      (mu4e-compose-signature  . "---\nHao Xiang Liew"))
+                    t)
+(set-email-account! "vtedu"
+                    '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
+                      (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
+                      (mu4e-trash-folder       . "/vtedu[vt.edu].Trash")
+                      (mu4e-refile-folder      . "/vtedu[vt.edu].All Mail")
+                      (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
+                      (mu4e-compose-signature  . "---\nHao Xiang Liew"))
+                    t)
 
 ;; alert
 (setq alert-default-style 'libnotify)
@@ -490,7 +473,6 @@
   (org-wild-notifier-mode))
 
 ;; file associations
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)) ;; .epub -> nov.el
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . arduino-mode)) ;; .ino -> arduino
 
 ;; spatial-navigate
