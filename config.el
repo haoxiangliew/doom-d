@@ -246,6 +246,7 @@
 ;; elcord-mode
 (elcord-mode)
 (setq elcord-mode-icon-alist '((+doom-dashboard-mode . "chika_icon")
+                               (fundamental-mode . "chika_icon")
                                (c-mode . "c-mode_icon")
                                (c++-mode . "cpp-mode_icon")
                                (clojure-mode . "clojure-mode_icon")
@@ -303,7 +304,7 @@
     (setq quality-val (string-to-number quality-val))
     (message "Opening %s with height≤%s with mpv..." (elfeed-entry-link entry) quality-val)
     (when (< 0 quality-val)
-      (setq quality-arg (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best --sub-auto=fuzzy --ytdl-raw-options=ignore-config=,sub-format=en,write-sub=" quality-val)))
+      (setq quality-arg (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best --sub-auto=fuzzy --ytdl-raw-options=ignore-config=,sub-format=en,write-sub= --fullscreen" quality-val)))
     (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
 
 (map! :leader
@@ -361,11 +362,11 @@
 (setq company-idle-delay 0.0)
 
 ;; disable company in remote buffers
-(add-hook 'eshell-mode-hook 'disable-company-remote)
-(defun disable-company-remote ()
-  (when (and (fboundp 'company-mode)
-             (file-remote-p default-directory))
-    (company-mode -1)))
+;; (add-hook 'eshell-mode-hook 'disable-company-remote)
+;; (defun disable-company-remote ()
+;;   (when (and (fboundp 'company-mode)
+;;              (file-remote-p default-directory))
+;;     (company-mode -1)))
 
 ;; lsp
 (setq lsp-ui-sideline-enable nil
@@ -405,12 +406,10 @@
 ;; intelligently load mu4e location in NixOS
 (add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
 (setq mu4e-maildir (expand-file-name "~/mbsync"))
-;; don't need to run cleanup after indexing for gmail
-(setq mu4e-index-cleanup nil)
 (setq mu4e-context-policy 'ask-if-none
       mu4e-compose-context-policy 'always-ask)
 (setq +mu4e-gmail-accounts '(("haoxiangliew@gmail.com" . "/gmail")
-                            ("haoxiangliew@vt.edu" . "/vtedu")))
+                             ("haoxiangliew@vt.edu" . "/vtedu")))
 (set-email-account! "gmail"
                     '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
                       (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
@@ -427,6 +426,44 @@
                       (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
                     t)
+
+;; By default trash does not mark as read
+
+(when (featurep! +gmail)
+  (after! mu4e
+    (delq! 'delete mu4e-marks #'assq)
+    (setf (alist-get 'delete mu4e-marks)
+          (list
+           :char '("D" . "✘")
+           :prompt "Delete"
+           :show-target (lambda (_target) "delete")
+           :action (lambda (docid msg target)
+                     (if (+mu4e-msg-gmail-p msg)
+                         (progn (message "The delete operation is invalid for Gmail accounts. Trashing instead.")
+                                (+mu4e--mark-seen docid msg target)
+                                (when (< 2 (- (float-time) +mu4e--last-invalid-gmail-action))
+                                  (sit-for 1))
+                                (setq +mu4e--last-invalid-gmail-action (float-time)))
+                       (mu4e~proc-remove docid))))
+          (alist-get 'trash mu4e-marks)
+          (list :char '("d" . "▼")
+                :prompt "dtrash"
+                :dyn-target (lambda (_target msg) (mu4e-get-trash-folder msg))
+                :action (lambda (docid msg target)
+                          (if (+mu4e-msg-gmail-p msg)
+                              (+mu4e--mark-seen docid msg target)
+                            (mu4e~proc-move docid (mu4e~mark-check-target target) "+T-N")))
+                #'+mu4e--mark-seen)
+          ;; Refile will be my "archive" function.
+          (alist-get 'refile mu4e-marks)
+          (list :char '("r" . "▼")
+                :prompt "rrefile"
+                :dyn-target (lambda (_target msg) (mu4e-get-refile-folder msg))
+                :action (lambda (docid msg target)
+                          (if (+mu4e-msg-gmail-p msg)
+                              (+mu4e--mark-seen docid msg target)
+                            (mu4e~proc-move docid (mu4e~mark-check-target target) "-N")))
+                #'+mu4e--mark-seen))))
 
 ;; alert
 (setq alert-default-style 'libnotify)
@@ -474,6 +511,7 @@
 
 ;; file associations
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . arduino-mode)) ;; .ino -> arduino
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode)) ;; .h -> c
 
 ;; spatial-navigate
 (global-set-key (kbd "<M-up>") 'spatial-navigate-backward-vertical-bar)
