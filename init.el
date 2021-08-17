@@ -173,8 +173,8 @@
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +org +gmail)       ; (requires isync and mu)
-       ;;notmuch
+       ;;(mu4e +org +gmail)       ; (requires isync and mu)
+       (notmuch +org)
        ;;(wanderlust +gmail)
 
        :app

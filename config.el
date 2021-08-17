@@ -272,7 +272,6 @@
                                (magit-mode . "magit-mode_icon")
                                (markdown-mode . "markdown-mode_icon")
                                (meson-mode . "meson-mode_icon")
-                               (mu4e . "emacs_pen_icon")
                                (nix-mode . "nix-mode_icon")
                                (org-mode . "org-mode_icon")
                                (org-agenda-mode . "org-mode_icon")
@@ -405,65 +404,36 @@
 ;; mu4e
 ;; intelligently load mu4e location in NixOS
 (add-to-list 'load-path (replace-regexp-in-string "[()]" "" (format "%s" (file-expand-wildcards "/nix/store/*-mu-*/share/emacs/site-lisp/mu4e"))))
-(setq mu4e-maildir (expand-file-name "~/mbsync"))
+(setq +mu4e-backend 'offlineimap)
 (setq mu4e-context-policy 'ask-if-none
       mu4e-compose-context-policy 'always-ask)
 (setq +mu4e-gmail-accounts '(("haoxiangliew@gmail.com" . "/gmail")
                              ("haoxiangliew@vt.edu" . "/vtedu")))
 (set-email-account! "gmail"
-                    '((mu4e-sent-folder        . "/gmail[Gmail].Sent Mail")
-                      (mu4e-drafts-folder      . "/gmail[Gmail].Drafts")
-                      (mu4e-trash-folder       . "/gmail[Gmail].Trash")
-                      (mu4e-refile-folder      . "/gmail[Gmail].All Mail")
+                    '((mu4e-sent-folder        . "/gmail/Sent Mail")
+                      (mu4e-drafts-folder      . "/gmail/Drafts")
+                      (mu4e-trash-folder       . "/gmail/Trash")
+                      (mu4e-refile-folder      . "/gmail/All Mail")
                       (smtpmail-smtp-user      . "haoxiangliew@gmail.com")
                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
                     t)
 (set-email-account! "vtedu"
-                    '((mu4e-sent-folder        . "/vtedu[vt.edu].Sent Mail")
-                      (mu4e-drafts-folder      . "/vtedu[vt.edu].Drafts")
-                      (mu4e-trash-folder       . "/vtedu[vt.edu].Trash")
-                      (mu4e-refile-folder      . "/vtedu[vt.edu].All Mail")
+                    '((mu4e-sent-folder        . "/vtedu/Sent Mail")
+                      (mu4e-drafts-folder      . "/vtedu/Drafts")
+                      (mu4e-trash-folder       . "/vtedu/Trash")
+                      (mu4e-refile-folder      . "/vtedu/All Mail")
                       (smtpmail-smtp-user      . "haoxiangliew@vt.edu")
                       (mu4e-compose-signature  . "---\nHao Xiang Liew"))
                     t)
 
-;; By default trash does not mark as read
-
-(when (featurep! +gmail)
-  (after! mu4e
-    (delq! 'delete mu4e-marks #'assq)
-    (setf (alist-get 'delete mu4e-marks)
-          (list
-           :char '("D" . "✘")
-           :prompt "Delete"
-           :show-target (lambda (_target) "delete")
-           :action (lambda (docid msg target)
-                     (if (+mu4e-msg-gmail-p msg)
-                         (progn (message "The delete operation is invalid for Gmail accounts. Trashing instead.")
-                                (+mu4e--mark-seen docid msg target)
-                                (when (< 2 (- (float-time) +mu4e--last-invalid-gmail-action))
-                                  (sit-for 1))
-                                (setq +mu4e--last-invalid-gmail-action (float-time)))
-                       (mu4e~proc-remove docid))))
-          (alist-get 'trash mu4e-marks)
-          (list :char '("d" . "▼")
-                :prompt "dtrash"
-                :dyn-target (lambda (_target msg) (mu4e-get-trash-folder msg))
-                :action (lambda (docid msg target)
-                          (if (+mu4e-msg-gmail-p msg)
-                              (+mu4e--mark-seen docid msg target)
-                            (mu4e~proc-move docid (mu4e~mark-check-target target) "+T-N")))
-                #'+mu4e--mark-seen)
-          ;; Refile will be my "archive" function.
-          (alist-get 'refile mu4e-marks)
-          (list :char '("r" . "▼")
-                :prompt "rrefile"
-                :dyn-target (lambda (_target msg) (mu4e-get-refile-folder msg))
-                :action (lambda (docid msg target)
-                          (if (+mu4e-msg-gmail-p msg)
-                              (+mu4e--mark-seen docid msg target)
-                            (mu4e~proc-move docid (mu4e~mark-check-target target) "-N")))
-                #'+mu4e--mark-seen))))
+;; notmuch
+(setq +notmuch-mail-folder "~/mail/")
+(setq +notmuch-sync-backend "notmuch new")
+(after! notmuch
+  (setq notmuch-show-log nil
+        notmuch-hello-sections `(notmuch-hello-insert-saved-searches
+                                 notmuch-hello-insert-alltags)
+        notmuch-message-headers-visible nil))
 
 ;; alert
 (setq alert-default-style 'libnotify)
