@@ -303,7 +303,7 @@
     (setq quality-val (string-to-number quality-val))
     (message "Opening %s with height≤%s with mpv..." (elfeed-entry-link entry) quality-val)
     (when (< 0 quality-val)
-      (setq quality-arg (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best --sub-auto=fuzzy --ytdl-raw-options=ignore-config=,sub-format=en,write-sub= --fullscreen" quality-val)))
+      (setq quality-arg (format "--ytdl-format=bestvideo[height<=?%s]+bestaudio/best --sub-auto=fuzzy --ytdl-raw-options=ignore-config=,sub-format=en,write-sub=" quality-val)))
     (start-process "elfeed-mpv" nil "mpv" quality-arg (elfeed-entry-link entry))))
 
 (map! :leader
@@ -351,6 +351,7 @@
 (setq flycheck-check-syntax-automatically '(save mode-enable))
 
 ;; magit
+(require 'git-commit)
 (after! magit
   (magit-delta-mode +1))
 
@@ -442,7 +443,16 @@
 (setq cfw:org-overwrite-default-keybinding t)
 (map! :leader
       :desc "calfw-org"
-      "o C" #'cfw:open-org-calendar)
+      "o C" #'my-open-calendar)
+(defun my-open-calendar()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:org-create-source "Cyan") ; org-agenda
+    (cfw:ical-create-source "gcal" "https://calendar.google.com/calendar/ical/ieee.virginiatech%40gmail.com/public/basic.ics" "Green") ; IEEE @ VT
+    (cfw:ical-create-source "canvas" "https://canvas.vt.edu/feeds/calendars/user_B7azceel162srPg4Nw9Ax13hcF0aPcJ57bcriQbK.ics" "Red") ; Canvas
+   )))
 
 ;; org-agenda
 (setq org-agenda-include-deadlines t
