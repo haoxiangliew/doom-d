@@ -400,7 +400,7 @@
 (setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
 
 ;; pdf-tools
-(setq pdf-view-midnight-colors '("#839496" . "#002b36"))
+(setq pdf-view-midnight-colors '("#f8f8f2" . "#282a36"))
 
 ;; mu4e
 ;; intelligently load mu4e location in NixOS
@@ -438,6 +438,14 @@
 
 ;; alert
 (setq alert-default-style 'libnotify)
+
+;; org-mode
+(defadvice! no-errors/+org-inline-image-data-fn (_protocol link _description)
+  :override #'+org-inline-image-data-fn
+  "Interpret LINK as base64-encoded image data. Ignore all errors."
+  (ignore-errors
+    (base64-decode-string link)))
+(setq org-startup-with-inline-images 'inlineimages)
 
 ;; calfw
 (setq cfw:org-overwrite-default-keybinding t)
@@ -507,7 +515,27 @@
 (define-key evil-insert-state-map (kbd "M-h") 'spatial-navigate-backward-horizontal-bar)
 (define-key evil-insert-state-map (kbd "M-l") 'spatial-navigate-forward-horizontal-bar)
 
-;; tramp
+;; counsel-spotify
+;; (map! :leader
+;;       :desc "counsel-spotify-toggle-play-pause"
+;;       "o S t" #'counsel-spotify-toggle-play-pause)
+;; (map! :leader
+;;       :desc "counsel-spotify-next"
+;;       "o S n" #'counsel-spotify-next)
+;; (map! :leader
+;;       :desc "counsel-spotify-previous"
+;;       "o S p" #'counsel-spotify-previous)
+;; (map! :leader
+;;       :desc "counsel-spotify-search-playlist"
+;;       "o S s p" #'counsel-spotify-search-playlist)
+;; (map! :leader
+;;       :desc "counsel-spotify-search-album"
+;;       "o S s a" #'counsel-spotify-search-album)
+;; (map! :leader
+;;       :desc "counsel-spotify-search-track"
+;;       "o S s t" #'counsel-spotify-search-track)
+
+;; Tramp
 (after! tramp
   (setq tramp-default-method "ssh")
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash")))

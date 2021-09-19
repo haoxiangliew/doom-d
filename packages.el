@@ -76,6 +76,9 @@
 ;; spatial-navigate
 (package! spatial-navigate)
 
+;; smudge
+(package! smudge)
+
 ;; canvas-emacs
 (package! canvas-emacs
   :recipe (:host github :repo "haoxiangliew/canvas-emacs"))

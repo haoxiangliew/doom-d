@@ -22,5 +22,6 @@
 #+LATEX_HEADER: \newcommand{\angstrom}{\textup{\AA}}
 
 #+OPTIONS: tags:nil
+#+STARTUP: latexpreview
 
 #+LATEX: \newpage
